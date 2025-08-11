@@ -1,26 +1,49 @@
 @import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --brand: 220 84% 65%;
+  --success: 120 57% 58%;
+  --warning: 50, 90%, 57%;
+  --error: 0 84% 60%;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --bg-background: 30 6% 12%;
+  --bg-primary: 26 4% 16%;
+  --bg-secondary: 20 2% 32%;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --text-primary: 214 32% 91%;
+  --text-secondary: 216 22% 76%;
+  --text-tertiary: 218 10% 65%;
+
+  --placeholder: 216 3% 30%;
+
+  --border: 25 6% 21%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-primary text-secondary rounded-xs;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* für IE und Edge */
+  scrollbar-width: none; /* für Firefox */
+}
+
+@theme {
+  --animate-wiggle: wiggle 2s ease-in-out infinite;
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-0.3deg);
+    }
+    50% {
+      transform: rotate(0.3deg);
+    }
+  }
+}
+
+

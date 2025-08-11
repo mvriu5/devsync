@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+import tailwindcss_animate from "tailwindcss-animate"
+
 function withOpacity(variableName: string) {
     return `hsl(var(${variableName}) / <alpha-value>)`;
 }
@@ -21,59 +23,53 @@ export default {
                 background: withOpacity('--bg-background'),
                 primary: withOpacity('--bg-primary'),
                 secondary: withOpacity('--bg-secondary'),
-                brand: withOpacity('--bg-brand'),
+                brand: withOpacity('--brand'),
             },
             fill: {
-                error: withOpacity('--fill-error'),
-                warning: withOpacity('--fill-warning'),
-                success: withOpacity('--fill-success'),
-                info: withOpacity('--fill-info'),
-                brand: withOpacity('--fill-brand'),
+                error: withOpacity('--error'),
+                warning: withOpacity('--warning'),
+                success: withOpacity('--success'),
+                brand: withOpacity('--brand'),
             },
             backgroundColor: {
                 background: withOpacity('--bg-background'),
                 primary: withOpacity('--bg-primary'),
                 secondary: withOpacity('--bg-secondary'),
-                error: withOpacity('--bg-error'),
-                warning: withOpacity('--bg-warning'),
-                success: withOpacity('--bg-success'),
-                info: withOpacity('--bg-info'),
-                brand: withOpacity('--bg-brand'),
+                error: withOpacity('--error'),
+                warning: withOpacity('--warning'),
+                success: withOpacity('--success'),
+                brand: withOpacity('--brand'),
             },
             textColor: {
                 primary: withOpacity('--text-primary'),
                 secondary: withOpacity('--text-secondary'),
                 tertiary: withOpacity('--text-tertiary'),
-                error: withOpacity('--text-error'),
-                warning: withOpacity('--text-warning'),
-                success: withOpacity('--text-success'),
-                info: withOpacity('--text-info'),
-                brand: withOpacity('--text-brand'),
+                error: withOpacity('--error'),
+                warning: withOpacity('--warning'),
+                success: withOpacity('--success'),
+                brand: withOpacity('--brand'),
             },
             borderColor: {
-                main: withOpacity('--border-main'),
-                success: withOpacity('--border-success'),
-                warning: withOpacity('--border-warning'),
-                error: withOpacity('--border-error'),
-                info: withOpacity('--border-info'),
-                brand: withOpacity('--border-brand'),
+                main: withOpacity('--border'),
+                success: withOpacity('--success'),
+                warning: withOpacity('--warning'),
+                error: withOpacity('--error'),
+                brand: withOpacity('--brand'),
             },
             ringColor: {
-                success: withOpacity('--ring-success'),
-                warning: withOpacity('--ring-warning'),
-                error: withOpacity('--ring-error'),
-                info: withOpacity('--ring-info'),
-                brand: withOpacity('--ring-brand'),
+                success: withOpacity('--success'),
+                warning: withOpacity('--warning'),
+                error: withOpacity('--error'),
+                brand: withOpacity('--brand'),
             },
             outlineColor: {
-                success: withOpacity('--outline-success'),
-                warning: withOpacity('--outline-warning'),
-                error: withOpacity('--outline-error'),
-                info: withOpacity('--outline-info'),
-                brand: withOpacity('--outline-brand'),
+                success: withOpacity('--success'),
+                warning: withOpacity('--warning'),
+                error: withOpacity('--error'),
+                brand: withOpacity('--brand'),
             },
             placeholderColor: {
-                main: withOpacity('--text-placeholder'),
+                main: withOpacity('--placeholder'),
             },
             keyframes: {
                 "accordion-down": {
@@ -92,6 +88,6 @@ export default {
         },
     },
     plugins: [
-        require("tailwindcss-animate")
+        tailwindcss_animate
     ],
 } satisfies Config;
