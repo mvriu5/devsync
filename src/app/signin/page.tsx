@@ -30,7 +30,7 @@ export default function SignIn() {
 
                 <Button
                     type={"button"}
-                    className={"w-full"}
+                    className={"w-20"}
                     variant={"brand"}
                     onClick={onGithubSignin}
                 >

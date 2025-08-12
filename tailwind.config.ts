@@ -69,7 +69,7 @@ export default {
                 brand: withOpacity('--brand'),
             },
             placeholderColor: {
-                main: withOpacity('--placeholder'),
+                main: withOpacity('--text-placeholder'),
             },
             keyframes: {
                 "accordion-down": {
