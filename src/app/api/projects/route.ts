@@ -9,11 +9,11 @@ import {
 export async function POST(req: Request) {
     try {
         const body = await req.json()
-        const { userId, name, description, repoUrl, todos } = body
+        const { userId, name, description, repoUrl, todos, status } = body
 
-        if (!userId || !name || !description || !repoUrl) {
+        if (!userId || !name || !repoUrl || !status) {
             return NextResponse.json(
-                { error: "userId, name, description, repoUrl are required" },
+                { error: "userId, name, repoUrl and status are required" },
                 { status: 400 })
         }
 
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
             description,
             repoUrl,
             todos,
+            status,
             createdAt: new Date(),
             updatedAt: new Date()
         })
@@ -60,7 +61,7 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
     try {
         const body = await req.json()
-        const { id, name, description, repoUrl, todos } = body
+        const { id, name, description, repoUrl, todos, status } = body
 
         if (!id) {
             return NextResponse.json(
@@ -68,7 +69,7 @@ export async function PUT(req: Request) {
                 { status: 400 })
         }
 
-        const updatedProject = await updateProject(id, { name, description, repoUrl, todos })
+        const updatedProject = await updateProject(id, { name, description, repoUrl, todos, status })
 
         if (!updatedProject) {
             return NextResponse.json(

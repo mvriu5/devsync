@@ -37,7 +37,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
             .refine((name) => !projects?.some(p => p.name === name), { message: "A project with this name already exists." }),
         description: z.string().optional(),
         repository: z.url().startsWith("https://github.com/"),
-        todos: z.array(z.string()).optional()
+        todos: z.array(z.string()).optional(),
+        status: z.enum(["in-progress", "completed", "paused", "to-do", "backlog"]).default("to-do").optional()
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -46,7 +47,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
             name: "",
             description: "",
             repository: "",
-            todos: []
+            todos: [],
+            status: "to-do"
         }
     })
 
@@ -58,7 +60,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
             name: values.name,
             description: values.description ?? "",
             repoUrl: values.repository,
-            todos: {},
+            todos: values.todos,
+            status: values.status ?? "to-do",
             createdAt: new Date(Date.now()),
             updatedAt: new Date(Date.now())
         })
@@ -69,6 +72,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
         })
 
         onOpenChange(false)
+        form.reset()
     }
 
     return (
@@ -145,7 +149,6 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                 type={"reset"}
                                 onClick={() => {
                                     onOpenChange(false)
-                                    form.reset()
                                 }}
                             >
                                 Cancel

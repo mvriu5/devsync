@@ -110,7 +110,7 @@ const Toast = ({id, title, subtitle, icon, scale = 1, position = "br", closeButt
                 >
                     <div
                         className={cn(
-                            "min-w-72 min-h-16 flex flex-row justify-between p-2 pl-4 rounded-xs shadow-md " +
+                            "min-w-72 min-h-16 flex flex-row justify-between p-2 pl-4 rounded-xs shadow-xl " +
                             "bg-background border border-main",
                             className
                         )}
@@ -142,7 +142,7 @@ const Toast = ({id, title, subtitle, icon, scale = 1, position = "br", closeButt
                                 <Button
                                     className={cn("py-1 px-2 rounded-xs text-xs", classNames?.actionButtonClassname)}
                                     onClick={onAction}
-                                    variant={"default"}
+                                    variant={"primary"}
                                 >
                                     {actionButtonText || "Undo"}
                                 </Button>

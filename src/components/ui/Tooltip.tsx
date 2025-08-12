@@ -219,7 +219,7 @@ const Tooltip = ({ id, anchor = "rc", width, delay = 1000, icon, message, offset
 
     return (
         <div
-            className={cn("absolute z-50 w-max flex gap-4 items-center px-2 py-1 rounded-xs shadow-md text-xs dark:bg-[#f2f2f2] border border-main overflow-visible")}
+            className={cn("absolute z-50 w-max flex gap-4 items-center px-2 py-1 rounded-xs shadow-xl text-xs dark:bg-[#f2f2f2] border border-main overflow-visible")}
             style={{
                 top: position.y,
                 left: position.x,

@@ -24,6 +24,7 @@ export default {
                 primary: withOpacity('--bg-primary'),
                 secondary: withOpacity('--bg-secondary'),
                 brand: withOpacity('--brand'),
+                main: withOpacity('--border')
             },
             fill: {
                 error: withOpacity('--error'),
