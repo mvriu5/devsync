@@ -12,12 +12,6 @@ export async function middleware(request: NextRequest) {
     const isLanding   = landingRoutes.includes(pathname)
     const isViewpage  = pathname.startsWith("/view")
 
-    if (session) {
-        const url = request.nextUrl.clone()
-        url.pathname = "/dashboard"
-        return NextResponse.redirect(url)
-    }
-
     if (!session && !isViewpage) {
         if (isAuthRoute || isLanding) return NextResponse.next()
         return NextResponse.redirect(new URL("/", request.url))

@@ -20,7 +20,9 @@ const SelectTrigger = ({ className, children, ...props }: ComponentPropsWithRef<
             )}
             {...props}
         >
-            {children}
+            <div className={"flex items-center gap-2"}>
+                {children}
+            </div>
             <SelectPrimitive.Icon asChild>
                 <ChevronDown size={14} className="text-tertiary group-data-[state=open]:rotate-180 group-data-[state=open]:mt-0 transition-all mt-0.5" />
             </SelectPrimitive.Icon>

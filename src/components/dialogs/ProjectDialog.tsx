@@ -11,7 +11,7 @@ import {useGitHubRepos} from "@/hooks/useGithub"
 import {authClient} from "@/lib/auth-client"
 import {useQuery} from "@tanstack/react-query"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/Select"
-import {PackagePlus} from "lucide-react"
+import {FolderGit2, PackagePlus} from "lucide-react"
 
 interface ProjectDialogProps {
     open: boolean
@@ -36,9 +36,13 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
             .max(12, {message: "Please enter less than 12 characters."})
             .refine((name) => !projects?.some(p => p.name === name), { message: "A project with this name already exists." }),
         description: z.string().optional(),
-        repository: z.url().startsWith("https://github.com/"),
+        repository: z.url()
+            .startsWith("https://github.com/")
+            .refine((url) => !projects?.some(p => p.repoUrl = url), { message: "A project of this repository already exists." }),
         todos: z.array(z.string()).optional(),
-        status: z.enum(["in-progress", "completed", "paused", "to-do", "backlog"]).default("to-do").optional()
+        status: z.enum(["in-progress", "completed", "paused", "to-do", "backlog"])
+            .default("to-do")
+            .optional()
     })
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -126,6 +130,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                             disabled={reposLoading || !repos?.length}
                                         >
                                             <SelectTrigger className={"data-[state=open]:bg-secondary data-[state=open]:text-primary"}>
+                                                <FolderGit2 size={16} className={"text-tertiary"}/>
                                                 <SelectValue placeholder="Repository"/>
                                             </SelectTrigger>
                                             <SelectContent align={"end"}>

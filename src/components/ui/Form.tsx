@@ -76,7 +76,7 @@ const FormLabel = ({ className, ...props }: ComponentPropsWithRef<typeof LabelPr
     return (
         // biome-ignore lint/a11y/noLabelWithoutControl: <explanation>
         <label
-            className={cn("text-sm text-tertiary", className)}
+            className={cn("text-sm text-tertiary font-mono", className)}
             htmlFor={formItemId}
             {...props}
         />

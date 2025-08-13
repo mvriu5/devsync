@@ -28,9 +28,6 @@ export default function Dashboard() {
                     </div>
                     <div className={"flex items-center gap-2"}>
                         <ProjectDialog open={open} onOpenChange={setOpen} />
-                        <Button variant={"ghost_icon"}>
-                            <Ellipsis size={16}/>
-                        </Button>
                     </div>
 
                 </div>

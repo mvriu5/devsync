@@ -7,7 +7,7 @@ interface ProjectStore {
     projects: Project[] | null
     addProject: (project: ProjectInsert) => Promise<Project>
     refreshProject: (project: Project) => Promise<void>
-    removeProject: (project: Project) => Promise<void>
+    removeProject: (projectId: string) => Promise<void>
     getAllProjects: (userId: string) => Promise<void>
 }
 
@@ -45,10 +45,10 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
         }
     },
 
-    removeProject: async (project: Project) => {
+    removeProject: async (projectId: string) => {
         try {
-            await fetch(`/api/projects?id=${project.id}`, { method: "DELETE" })
-            const updatedList = get().projects?.filter(p => p.id !== project.id) || null
+            await fetch(`/api/projects?id=${projectId}`, { method: "DELETE" })
+            const updatedList = get().projects?.filter(p => p.id !== projectId) || null
             set({projects: updatedList})
         } catch (error) {
             set({ projects: get().projects })
