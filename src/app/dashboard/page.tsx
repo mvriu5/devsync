@@ -7,6 +7,7 @@ import {useEffect, useState} from "react"
 import {useProjectStore} from "@/store/projectStore"
 import {authClient} from "@/lib/auth-client"
 import { ProjectCard } from "@/components/ProjectCard"
+import { EmptySvg } from "@/components/EmptySvg"
 
 export default function Dashboard() {
     const {data: session, isPending: sessionLoading, error: sessionError} = authClient.useSession()
@@ -34,6 +35,12 @@ export default function Dashboard() {
                 {projects?.map((project) => (
                     <ProjectCard key={project.id} project={project}/>
                 ))}
+                {!projects || projects.length === 0 && (
+                    <div className={"flex flex-col mt-8 gap-2 justify-center items-center"}>
+                        <EmptySvg/>
+                        <p className={"text-tertiary"}>No projects yet.</p>
+                    </div>
+                )}
             </div>
         </div>
     )
