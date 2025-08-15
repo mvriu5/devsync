@@ -1,15 +1,21 @@
 import {Project} from "@/database"
-import {CircleDashed, Ellipsis, ExternalLink, Link2, Pencil, Trash} from "lucide-react"
+import {CircleDashed, Ellipsis, ExternalLink, Link2, PackageMinus, PackagePlus, Pencil, Trash} from "lucide-react"
 import {Button} from "@/components/ui/Button"
 import {StatusIcon} from "@/components/Status"
 import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/DropdownMenu"
 import {useProjectStore} from "@/store/projectStore"
+import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/Dialog"
+import {useToast} from "@/components/ui/ToastProvider"
+import {useState} from "react"
 
 interface ProjectCardProps {
     project: Project
 }
 function ProjectCard({project}: ProjectCardProps) {
     const { removeProject, refreshProject } = useProjectStore()
+    const {addToast} = useToast()
+
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
 
     const handleEdit = () => {
         //edit dialog
@@ -17,8 +23,13 @@ function ProjectCard({project}: ProjectCardProps) {
 
     const handleDelete = async () => {
         await removeProject(project.id)
-        //dialog zur sicherheit
-        //toast
+
+        addToast({
+            title: `Removed the project: ${project.name}`,
+            icon: <PackageMinus size={24} className={"text-brand"}/>
+        })
+
+        setDeleteDialogOpen(false)
     }
 
     const handleOpen = () => {
@@ -60,10 +71,27 @@ function ProjectCard({project}: ProjectCardProps) {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem className={"text-error focus:text-error focus:bg-error/10"} onClick={handleDelete}>
-                                <Trash size={14} className={"text-error"}/>
-                                Delete
-                            </DropdownMenuItem>
+                            <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                                <DialogTrigger asChild>
+                                    <DropdownMenuItem className={"text-error focus:text-error focus:bg-error/10"} onSelect={(e) => e.preventDefault()}>
+                                        <Trash size={14} className={"text-error"}/>
+                                        Delete
+                                    </DropdownMenuItem>
+                                </DialogTrigger>
+                                <DialogContent className={"p-4"}>
+                                    <DialogHeader>
+                                        <DialogTitle>Are you sure you want to delete this project?</DialogTitle>
+                                    </DialogHeader>
+                                    <div className={"flex justify-end items-center gap-2"}>
+                                        <Button variant={"primary"} onClick={() => setDeleteDialogOpen(false)}>
+                                            Cancel
+                                        </Button>
+                                        <Button variant={"error"} onClick={handleDelete}>
+                                            Delete
+                                        </Button>
+                                    </div>
+                                </DialogContent>
+                            </Dialog>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>

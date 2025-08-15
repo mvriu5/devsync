@@ -49,6 +49,7 @@ export default {
                 warning: withOpacity('--warning'),
                 success: withOpacity('--success'),
                 brand: withOpacity('--brand'),
+                placeholder: withOpacity('--text-placeholder'),
             },
             borderColor: {
                 main: withOpacity('--border'),

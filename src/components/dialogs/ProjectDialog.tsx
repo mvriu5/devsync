@@ -71,7 +71,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
         })
 
         addToast({
-            title: "Successfully created a new dashboard!",
+            title: "Successfully created a new project!",
             icon: <PackagePlus size={24} className={"text-brand"}/>
         })
 
@@ -80,7 +80,13 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
     }
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog
+            open={open}
+            onOpenChange={(value) => {
+                onOpenChange(value)
+                if (!open) form.reset()
+            }}
+        >
             <DialogTrigger asChild>
                 <Button variant={"primary"}>
                     New
@@ -129,7 +135,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                             onValueChange={field.onChange}
                                             disabled={reposLoading || !repos?.length}
                                         >
-                                            <SelectTrigger className={"data-[state=open]:bg-secondary data-[state=open]:text-primary"}>
+                                            <SelectTrigger className={"data-[state=open]:bg-secondary data-[state=open]:text-primary data-[placeholder]:text-placeholder"}>
                                                 <FolderGit2 size={16} className={"text-tertiary"}/>
                                                 <SelectValue placeholder="Repository"/>
                                             </SelectTrigger>
@@ -154,6 +160,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                 type={"reset"}
                                 onClick={() => {
                                     onOpenChange(false)
+                                    form.reset()
                                 }}
                             >
                                 Cancel
