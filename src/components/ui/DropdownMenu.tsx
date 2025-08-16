@@ -24,7 +24,7 @@ function DropdownMenuContent({className, sideOffset = 4, ...props}: React.Compon
                 data-slot="dropdown-menu-content"
                 sideOffset={sideOffset}
                 className={cn(
-                    "bg-background text-secondary overflow-x-hidden overflow-y-auto rounded-xs border border-main p-1 z-50 min-w-[8rem] shadow-xl",
+                    "scrollbar-hide bg-background text-secondary overflow-x-hidden overflow-y-auto rounded-xs border border-main p-1 z-50 min-w-[8rem] shadow-xl",
                     CONTAINER_STYLES.animation,
                     className
                 )}
@@ -88,16 +88,11 @@ function DropdownMenuRadioItem({className, children, ...props}: React.ComponentP
         <DropdownMenuPrimitive.RadioItem
             data-slot="dropdown-menu-radio-item"
             className={cn(
-                "focus:bg-secondary focus:text-primary relative flex cursor-default items-center gap-2 rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+                "focus:bg-secondary focus:text-primary relative flex cursor-default items-center gap-2 rounded-xs py-1.5 px-2 text-sm outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[state=checked]:bg-secondary data-[state=checked]:text-primary",
                 className
             )}
             {...props}
         >
-            <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
-                <DropdownMenuPrimitive.ItemIndicator>
-                    <CircleIcon className="size-2 fill-current" />
-                </DropdownMenuPrimitive.ItemIndicator>
-            </span>
             {children}
         </DropdownMenuPrimitive.RadioItem>
     )
@@ -150,13 +145,13 @@ function DropdownMenuSubTrigger({className, inset, children, ...props}: React.Co
             data-slot="dropdown-menu-sub-trigger"
             data-inset={inset}
             className={cn(
-                "focus:bg-secondary focus:text-primary data-[state=open]:bg-secondary data-[state=open]:text-primary flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none data-[inset]:pl-8",
+                "group focus:bg-secondary focus:text-primary data-[state=open]:bg-secondary data-[state=open]:text-primary flex cursor-default items-center rounded-xs pr-2 text-sm outline-hidden select-none data-[inset]:pl-8",
                 className
             )}
             {...props}
         >
             {children}
-            <ChevronRightIcon className="ml-auto size-4" />
+            <ChevronRightIcon className="ml-auto text-tertiary size-3 group-data-[state=open]:rotate-90 transition-all" />
         </DropdownMenuPrimitive.SubTrigger>
     )
 }
@@ -166,7 +161,7 @@ function DropdownMenuSubContent({className, ...props}: React.ComponentProps<type
         <DropdownMenuPrimitive.SubContent
             data-slot="dropdown-menu-sub-content"
             className={cn(
-                "bg-background text-secondary z-50 min-w-[8rem] overflow-hidden rounded-md border border-main p-1 shadow-xl",
+                "bg-background text-secondary z-50 min-w-[8rem] overflow-hidden rounded-xs border border-main p-1 shadow-xl",
                 CONTAINER_STYLES.animation,
                 className
             )}

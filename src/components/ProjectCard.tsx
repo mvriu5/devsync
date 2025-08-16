@@ -1,8 +1,17 @@
 import {Project} from "@/database"
-import {CircleDashed, Ellipsis, ExternalLink, Link2, PackageMinus, PackagePlus, Pencil, Trash} from "lucide-react"
+import {CircleDashed, Ellipsis, ExternalLink, Link2, PackageMinus, Pencil, Trash} from "lucide-react"
 import {Button} from "@/components/ui/Button"
-import {StatusIcon} from "@/components/Status"
-import {DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/DropdownMenu"
+import {status, StatusIcon} from "@/components/Status"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem,
+    DropdownMenuSeparator,
+    DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger,
+    DropdownMenuTrigger
+} from "./ui/DropdownMenu"
 import {useProjectStore} from "@/store/projectStore"
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/Dialog"
 import {useToast} from "@/components/ui/ToastProvider"
@@ -16,6 +25,7 @@ function ProjectCard({project}: ProjectCardProps) {
     const {addToast} = useToast()
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    const [projectStatus, setProjectStatus] = useState<string>(project.status ?? "to-do")
 
     const handleEdit = () => {
         //edit dialog
@@ -36,8 +46,10 @@ function ProjectCard({project}: ProjectCardProps) {
         //navigate zur view page
     }
 
-    const handleChangeStatus = () => {
-        //
+    const handleChangeStatus = async (statusId: string) => {
+        setProjectStatus(statusId)
+        const newProject = {...project, status: statusId}
+        await refreshProject(newProject)
     }
 
     return (
@@ -64,10 +76,24 @@ function ProjectCard({project}: ProjectCardProps) {
                                 <Pencil size={16} className={"hover:text-secondary"}/>
                                 Edit
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={handleChangeStatus}>
-                                <CircleDashed size={16} className={"hover:text-secondary"}/>
-                                Change Status
-                            </DropdownMenuItem>
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger>
+                                    <DropdownMenuItem>
+                                        <CircleDashed size={16} className={"hover:text-secondary"}/>
+                                        Change Status
+                                    </DropdownMenuItem>
+                                </DropdownMenuSubTrigger>
+                                <DropdownMenuSubContent sideOffset={8}>
+                                    <DropdownMenuRadioGroup value={projectStatus} onValueChange={handleChangeStatus}>
+                                    {status.map((s) => (
+                                        <DropdownMenuRadioItem key={s.id} value={s.id}>
+                                            <StatusIcon statusId={s.id}/>
+                                            {s.name}
+                                        </DropdownMenuRadioItem>
+                                    ))}
+                                    </DropdownMenuRadioGroup>
+                                </DropdownMenuSubContent>
+                            </DropdownMenuSub>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>

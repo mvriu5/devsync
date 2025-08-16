@@ -11,7 +11,7 @@ export type Project = {
     description: string
     repoUrl: string
     todos: Record<string, never>
-    status: "in-progress" | "completed" | "paused" | "to-do" | "backlog"
+    status: string
     createdAt: Date
     updatedAt: Date
 }
