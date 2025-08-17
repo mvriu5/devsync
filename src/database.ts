@@ -9,7 +9,9 @@ export type Project = {
     userId: string
     name: string
     description: string
+    password: string
     repoUrl: string
+    link: string
     todos: Record<string, never>
     status: string
     createdAt: Date

@@ -86,7 +86,7 @@ export const DialogTitle = ({ className, ...props }: ComponentPropsWithRef<typeo
     <DialogPrimitive.Title
         data-slot="dialog-title"
         className={cn(
-            "leading-none tracking-tight",
+            "leading-none tracking-tight text-lg font-semibold",
             className
         )}
         {...props}

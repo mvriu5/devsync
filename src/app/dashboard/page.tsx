@@ -60,13 +60,13 @@ export default function Dashboard() {
             </div>
             <div className={"absolute top-4 right-4"}>
             <Popover>
-                <PopoverTrigger>
-                    <div className={"flex items-center gap-2 bg-primary rounded-xs border border-main px-2 py-1"}>
+                <PopoverTrigger className={"group"}>
+                    <div className={"flex items-center gap-2 bg-primary group-data-[state=open]:bg-secondary rounded-xs border border-main px-2 py-1 transition-all"}>
                         <Avatar className={"size-5"}>
                             <AvatarImage src={""}/>
                             <AvatarFallback/>
                         </Avatar>
-                        <p>mvriu5</p>
+                        <p>{session?.user.name}</p>
                     </div>
                 </PopoverTrigger>
                 <PopoverContent

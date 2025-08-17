@@ -61,7 +61,7 @@ function ProjectCard({project}: ProjectCardProps) {
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                        <Button variant={"ghost_icon"} className={"data-[state=open]:bg-secondary data-[state=open]:text-primary"}>
+                        <Button variant={"ghost_icon"} className={"data-[state=open]:bg-secondary data-[state=open]:text-primary transition-all"}>
                             <Ellipsis size={16}/>
                         </Button>
                     </DropdownMenuTrigger>

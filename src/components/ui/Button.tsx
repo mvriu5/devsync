@@ -9,8 +9,8 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                primary: "bg-primary hover:bg-secondary border border-main text-secondary hover:text-primary ",
-                brand: "bg-brand/70 hover:bg-brand border border-brand/40 text-primary disabled:opacity-70",
+                primary: "bg-primary hover:bg-secondary border border-main text-secondary hover:text-primary",
+                brand: "bg-brand/70 hover:bg-brand border border-brand/40 text-primary disabled:opacity-70 hover:outline-2 hover:outline-brand/20",
                 ghost: "bg-transparent hover:bg-secondary text-secondary hover:text-primary shadow-none",
                 ghost_icon: "bg-transparent hover:bg-secondary text-secondary hover:text-primary px-2 shadow-none",
                 error: "bg-error/80 hover:bg-error text-primary border-error/20"
