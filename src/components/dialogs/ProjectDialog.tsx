@@ -1,3 +1,5 @@
+"use client"
+
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "../ui/Dialog"
 import {Button} from "@/components/ui/Button"
 import { Form, FormField, FormInput, FormItem, FormLabel, FormMessage } from "../ui/Form"
@@ -36,14 +38,14 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
         name: z.string()
             .min(3, {message: "Please enter more than 3 characters."})
             .max(12, {message: "Please enter less than 12 characters."})
-            .refine((name) => !projects?.some(p => p.name === name), { message: "A project with this name already exists." }),
+            .refine((name) => !projects?.some(p => p.name == name), { message: "A project with this name already exists." }),
         description: z.string().optional(),
         password: z.string().min(6),
         repository: z.url()
             .startsWith("https://github.com/")
-            .refine((url) => !projects?.some(p => p.repoUrl === url), { message: "A project of this repository already exists." }),
+            .refine((url) => !projects?.some(p => p.repoUrl == url), { message: "A project of this repository already exists." }),
         link: z.string()
-            .refine((link) => !projects?.some(p => p.link === link), {message: "A project with this link already exists."}),
+            .refine((link) => !projects?.some(p => p.link == link), {message: "A project with this link already exists."}),
         todos: z.array(z.string()).optional(),
         status: z.enum(["in-progress", "completed", "paused", "to-do", "backlog"])
             .default("to-do")
@@ -207,7 +209,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                         </div>
                         <div className={"w-full flex gap-2 justify-end"}>
                             <Button
-                                variant={"primary"}
+                                variant={"ghost"}
                                 className={"w-max"}
                                 type={"reset"}
                                 onClick={() => {

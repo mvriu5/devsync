@@ -51,7 +51,7 @@ export default function Dashboard() {
                 {projects?.map((project) => (
                     <ProjectCard key={project.id} project={project}/>
                 ))}
-                {!projects || projects.length === 0 && (
+                {!projects || projects?.length === 0 && (
                     <div className={"flex flex-col mt-8 gap-2 justify-center items-center"}>
                         <EmptySvg/>
                         <p className={"text-tertiary"}>No projects yet.</p>

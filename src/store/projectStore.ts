@@ -4,7 +4,7 @@ import { create } from "zustand/react"
 import {Project, ProjectInsert} from "@/database"
 
 interface ProjectStore {
-    projects: Project[] | null
+    projects: Project[]
     addProject: (project: ProjectInsert) => Promise<Project>
     refreshProject: (project: Project) => Promise<void>
     removeProject: (projectId: string) => Promise<void>
@@ -12,7 +12,7 @@ interface ProjectStore {
 }
 
 export const useProjectStore = create<ProjectStore>((set, get) => ({
-    projects: null,
+    projects: [],
 
     addProject: async (project: ProjectInsert) => {
         try {
@@ -22,7 +22,7 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
                 body: JSON.stringify(project)
             })
             const newProject = await response.json()
-            set({projects: [...(get().projects || []), newProject[0]]})
+            set({projects: [...get().projects, newProject[0]]})
             return newProject
         } catch (error) {
             set({ projects: get().projects })
@@ -59,10 +59,10 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     getAllProjects: async (userId: string) => {
         try {
             const projectsRes = await fetch(`/api/projects?userId=${userId}`)
-            const projects = await projectsRes.json()
-            set({ projects })
+            const data = await projectsRes.json()
+            set({ projects: Array.isArray(data) ? data : [] })
         } catch (error) {
-            set({ projects: get().projects })
+            set({ projects: [] })
             throw error
         }
     }
