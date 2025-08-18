@@ -103,7 +103,7 @@ const FormInput = ({ className, ...props }: InputHTMLAttributes<HTMLInputElement
         <Input
             id={formItemId}
             className={cn(
-                error && "border-2 border-error focus-visible:ring-0 focus:border-error",
+                error && "focus:outline-0 border-2 border-error focus-visible:ring-0 focus:border-error focus:bg-error/5",
                 className
             )}
             aria-describedby={!error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`}

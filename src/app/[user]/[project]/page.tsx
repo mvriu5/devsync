@@ -2,10 +2,16 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/Avatar"
 import {CommitCard} from "@/components/CommitCard"
 import {ProgressBar} from "@/components/ui/Progressbar"
 
-export default function Page() {
+interface ProjectPageProps {
+    params: {
+        user: string
+        project: string
+    }
+}
+
+export default function ProjectPage({params}: ProjectPageProps) {
     return (
         <div className={"flex flex-col w-full h-screen p-8 gap-8 items-center justify-center bg-background"}>
-
             <div className={"flex flex-col xl:w-1/2 justify-center gap-2"}>
                 <div className={"flex item-center gap-2"}>
                     <Avatar className={"size-6"}>

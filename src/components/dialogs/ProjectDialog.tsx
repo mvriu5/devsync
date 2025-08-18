@@ -42,7 +42,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
         description: z.string().optional(),
         password: z.string().min(6),
         repository: z.url()
-            .startsWith("https://github.com/")
+            .startsWith("https://github.com/", { message: "Please select a repository."})
             .refine((url) => !projects?.some(p => p.repoUrl == url), { message: "A project of this repository already exists." }),
         link: z.string()
             .refine((link) => !projects?.some(p => p.link == link), {message: "A project with this link already exists."}),
@@ -192,7 +192,7 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                         <FormLabel>Link</FormLabel>
                                         <LinkInput
                                             {...field}
-                                            domain={`devsync.com/${session?.user.name.toLowerCase().replace(/ /g, "")}`}
+                                            domain={`devsync.com/${session?.user.name.toLowerCase().replace(/ /g, "")}/`}
                                             value={field.value}
                                             onValueChange={field.onChange}
                                         />

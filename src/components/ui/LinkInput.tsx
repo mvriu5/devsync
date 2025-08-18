@@ -13,12 +13,12 @@ export function LinkInput({ domain, value, onValueChange, placeholder = "your-cu
     return (
         <div
             className={cn(
-                "group h-8 flex items-center border border-main rounded-xs overflow-hidden bg-primary",
-                "focus-within:border-brand focus-within:outline focus-within:outline-brand/60 transition-all",
+                "group h-10 p-1 flex items-center border border-main rounded-xs overflow-hidden bg-primary",
+                "focus-within:border-brand focus-within:outline focus-within:outline-brand/60 focus-within:bg-brand/5 transition-all",
                 className,
             )}
         >
-            <div className="p-2 bg-secondary text-tertiary font-mono text-sm border-r border-main flex-shrink-0">
+            <div className="h-full px-1 bg-secondary text-tertiary font-mono text-sm border-r border-main flex-shrink-0 rounded-xs flex items-center">
                 {domain}
             </div>
 

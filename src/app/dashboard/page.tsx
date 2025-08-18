@@ -1,6 +1,6 @@
 "use client"
 
-import {Boxes, LogOut, Settings, User} from "lucide-react"
+import {Boxes, GitCompare, LogOut, Package2, Settings, User} from "lucide-react"
 import {ProjectDialog} from "@/components/dialogs/ProjectDialog"
 import {useEffect, useState} from "react"
 import {useProjectStore} from "@/store/projectStore"
@@ -11,6 +11,9 @@ import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/Avatar"
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/Popover"
 import {Spinner} from "@/components/ui/Spinner"
 import {useRouter} from "next/navigation"
+import {setPriority} from "node:os"
+import {project} from "@/db/schema"
+import {Skeleton} from "@/components/ui/Skeleton"
 
 export default function Dashboard() {
     const router = useRouter()
@@ -19,10 +22,11 @@ export default function Dashboard() {
 
     const [open, setOpen] = useState(false)
     const [signoutLoading, setSignoutLoading] = useState(false)
+    const [projectsLoading, setProjectsLoading] = useState(true)
 
     useEffect(() => {
         if(!session) return
-        getAllProjects(session.user.id)
+        getAllProjects(session.user.id).then(() => setProjectsLoading(false))
     }, [session])
 
     const handleSignout = async () => {
@@ -40,7 +44,7 @@ export default function Dashboard() {
             <div className={"w-1/2 flex flex-col"}>
                 <div className="flex items-center justify-between border border-main p-2 bg-primary rounded-xs rounded-b-none">
                     <div className={"flex items-center gap-2 text-primary font-semibold text-lg"}>
-                        <Boxes size={24}/>
+                        <Package2 size={24} className={"text-secondary"}/>
                         Projects
                     </div>
                     <div className={"flex items-center gap-2"}>
@@ -51,17 +55,30 @@ export default function Dashboard() {
                 {projects?.map((project) => (
                     <ProjectCard key={project.id} project={project}/>
                 ))}
-                {!projects || projects?.length === 0 && (
+                {projectsLoading && (
+                    <div className={"flex flex-col gap-4 mt-4"}>
+                        <Skeleton className={"w-full h-10"}/>
+                        <Skeleton className={"w-full h-10"}/>
+                        <Skeleton className={"w-full h-10"}/>
+                    </div>
+                )}
+                {(!projects || projects?.length === 0) && !projectsLoading && (
                     <div className={"flex flex-col mt-8 gap-2 justify-center items-center"}>
                         <EmptySvg/>
                         <p className={"text-tertiary"}>No projects yet.</p>
                     </div>
                 )}
             </div>
-            <div className={"absolute top-4 right-4"}>
-            <Popover>
+            <div className={"absolute w-full top-4 flex items-center justify-between px-4"}>
+                <div className={"flex items-center gap-2"}>
+                    <GitCompare size={24} className={"text-primary"}/>
+                    <p className={"text-lg text-primary font-mono font-semibold"}>DevSync</p>
+                    <p className={"font-mono text-2xl text-white/40"}>/</p>
+                    <p className={"font-mono"}>Dashboard</p>
+                </div>
+                <Popover>
                 <PopoverTrigger className={"group"}>
-                    <div className={"flex items-center gap-2 bg-primary group-data-[state=open]:bg-secondary rounded-xs border border-main px-2 py-1 transition-all"}>
+                    <div className={"flex items-center gap-2 group-data-[state=open]:bg-secondary hover:bg-primary group-data-[state=open]:hover:bg-secondary rounded-xs px-2 py-1 transition-all"}>
                         <Avatar className={"size-5"}>
                             <AvatarImage src={""}/>
                             <AvatarFallback/>
