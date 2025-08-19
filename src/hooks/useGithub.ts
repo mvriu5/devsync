@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Octokit } from '@octokit/rest'
 
 async function fetchGitHubRepos(accessToken: string) {
-    if (!accessToken) throw new Error('Kein GitHub Access Token übergeben')
+    if (!accessToken) throw new Error('No access token')
 
     const octokit = new Octokit({ auth: accessToken })
 

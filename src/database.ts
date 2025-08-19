@@ -1,6 +1,6 @@
 import {drizzle} from 'drizzle-orm/node-postgres'
 import {eq} from "drizzle-orm"
-import {project} from "@/db/schema"
+import {project, user} from "@/db/schema"
 
 export const db = drizzle(process.env.DATABASE_URI!)
 
@@ -50,4 +50,15 @@ export const getProjectsFromUser = async (userId: string): Promise<ProjectSelect
         .select()
         .from(project)
         .where(eq(project.userId, userId))
+}
+
+
+//Users
+export type User = typeof user.$inferSelect
+
+export const getUserByName = async (name: string): Promise<User[]> => {
+    return db
+        .select()
+        .from(user)
+        .where(eq(user.name, name))
 }

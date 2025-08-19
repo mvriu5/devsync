@@ -224,8 +224,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                 className={"w-max"}
                                 type={"submit"}
                                 disabled={form.formState.isSubmitting}
+                                loading={form.formState.isSubmitting}
                             >
-                                {(form.formState.isSubmitting) && <Spinner/>}
                                 Create
                             </Button>
                         </div>
