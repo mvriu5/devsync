@@ -44,10 +44,10 @@ export const deleteProject = async (id: string) => {
         .returning()
 }
 
+
 export const getProjectsFromUser = async (userId: string): Promise<ProjectSelect[]> => {
     return db
         .select()
         .from(project)
         .where(eq(project.userId, userId))
-
 }
