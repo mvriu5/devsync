@@ -1,4 +1,4 @@
-import {Project} from "@/database"
+import {Project, User} from "@/database"
 import {CircleDashed, Ellipsis, ExternalLink, Link2, PackageMinus, Pencil, Trash} from "lucide-react"
 import {Button} from "@/components/ui/Button"
 import {status, StatusIcon} from "@/components/Status"
@@ -16,13 +16,16 @@ import {useProjectStore} from "@/store/projectStore"
 import {Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/Dialog"
 import {useToast} from "@/components/ui/ToastProvider"
 import {useState} from "react"
+import {useRouter} from "next/navigation"
 
 interface ProjectCardProps {
     project: Project
+    userName: string | null
 }
-function ProjectCard({project}: ProjectCardProps) {
+function ProjectCard({project, userName}: ProjectCardProps) {
     const { removeProject, refreshProject } = useProjectStore()
-    const {addToast} = useToast()
+    const { addToast } = useToast()
+    const router = useRouter()
 
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [projectStatus, setProjectStatus] = useState<string>(project.status ?? "to-do")
@@ -43,7 +46,7 @@ function ProjectCard({project}: ProjectCardProps) {
     }
 
     const handleOpen = () => {
-        //navigate zur view page
+        router.push(`/${userName}/${project.link}`)
     }
 
     const handleChangeStatus = async (statusId: string) => {

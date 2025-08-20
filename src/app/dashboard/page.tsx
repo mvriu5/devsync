@@ -53,7 +53,7 @@ export default function Dashboard() {
 
                 </div>
                 {projects?.map((project) => (
-                    <ProjectCard key={project.id} project={project}/>
+                    <ProjectCard key={project.id} project={project} userName={session?.user.name ?? null}/>
                 ))}
                 {projectsLoading && (
                     <div className={"flex flex-col gap-4 mt-4"}>

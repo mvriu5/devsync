@@ -17,6 +17,8 @@ import Link from "next/link"
 import {useGitHubRepos} from "@/hooks/useGithub"
 import {authClient} from "@/lib/auth-client"
 import {useGitHubCommits} from "@/hooks/useGithubCommits"
+import {ScrollArea} from "@/components/ui/ScrollArea"
+import {useRouter} from "next/navigation"
 
 interface ProjectPageProps {
     params: Promise<{
@@ -26,6 +28,8 @@ interface ProjectPageProps {
 }
 
 export default function ProjectPage({params}: ProjectPageProps) {
+    const router = useRouter()
+
     const [authenticated, setAuthenticated] = useState(false)
     const [passwordInput, setPasswordInput] = useState("")
     const [authError, setAuthError] = useState<string | null>("")
@@ -43,7 +47,6 @@ export default function ProjectPage({params}: ProjectPageProps) {
         enabled: !!session,
         staleTime: 1000 * 60 * 5,
     })
-
     const {data: commits, isLoading: commitsLoading, isError: commitsError} = useGitHubCommits(
         accessData?.data?.accessToken ?? "",
         userObject?.name ?? "",
@@ -100,6 +103,7 @@ export default function ProjectPage({params}: ProjectPageProps) {
                     <div className={"flex items-center gap-2 justify-end"}>
                         <Button
                             variant={"ghost"}
+                            onClick={() => router.push("/")}
                         >
                             Go back
                         </Button>
@@ -117,11 +121,9 @@ export default function ProjectPage({params}: ProjectPageProps) {
         )
     }
 
-    console.log(projectObject)
-
     return (
-        <div className={"flex flex-col w-full min-h-screen p-8 gap-8 items-center justify-center bg-background"}>
-            <div className={"flex flex-col xl:w-1/2 justify-center gap-2"}>
+        <div className={"w-2/3 flex flex-col p-8 gap-8 items-center justify-center"}>
+            <div className={"w-full flex flex-col justify-center gap-2"}>
                 <div className={"flex item-center gap-2"}>
                     <Avatar className={"size-6"}>
                         <AvatarImage src={userObject?.image ?? ""}/>
@@ -143,7 +145,7 @@ export default function ProjectPage({params}: ProjectPageProps) {
                 <p>{projectObject?.description ?? ""}</p>
             </div>
 
-            <div className={"flex flex-col xl:w-1/2 justify-center gap-2"}>
+            <div className={"w-full flex flex-col justify-center gap-2"}>
                 <div className={"flex item-center gap-2"}>
                     <p className={"text-sm text-tertiary text-nowrap"}>Progress</p>
                     <div className={"w-full h-px bg-secondary/50 mt-2.5"}/>
@@ -153,26 +155,26 @@ export default function ProjectPage({params}: ProjectPageProps) {
                 <p>{"60% are already done!"}</p>
             </div>
 
-            <div className={"flex flex-col xl:w-1/2 justify-center gap-4"}>
+            <div className={"w-full flex flex-col justify-center gap-4"}>
                 <div className={"flex item-center gap-2"}>
                     <p className={"text-sm text-tertiary text-nowrap"}>Latest Commits </p>
                     <div className={"w-full h-px bg-secondary/50 mt-2.5"}/>
                 </div>
-                {commits?.map((commit) => (
-                    <CommitCard
-                        key={commit.commit.url}
-                        title={commit.commit.message}
-                        commitType={"Commit"}
-                        date={new Date(commit.commit.author?.date ?? new Date()) ?? new Date()}
-                        linesAdded={commit.stats?.additions ?? 0}
-                        linesRemoved={commit.stats?.deletions ?? 0}/>
-                ))}
-                <div className={"bg-primary/40 px-4 py-2 gap-4 flex w-full border border-main/40 shadow-md items-center justify-center"}>
-                    <p className={"text-tertiary"}>See all...</p>
-                </div>
+                <ScrollArea className={"h-80"}>
+                    <div className={"flex flex-col gap-2 w-full"}>
+                        {commits?.map((commit) => (
+                            <CommitCard
+                                key={commit.commit.url}
+                                title={commit.commit.message}
+                                commitType={"Commit"}
+                                date={new Date(commit.commit.author?.date ?? new Date()) ?? new Date()}
+                                linesAdded={commit.stats?.additions ?? 0}
+                                linesRemoved={commit.stats?.deletions ?? 0}
+                            />
+                        ))}
+                    </div>
+                </ScrollArea>
             </div>
-
-
         </div>
     )
 }

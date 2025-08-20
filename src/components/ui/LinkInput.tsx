@@ -9,7 +9,7 @@ interface LinkInputProps {
     className?: string
 }
 
-export function LinkInput({ domain, value, onValueChange, placeholder = "your-custom-link", className }: LinkInputProps) {
+function LinkInput({ domain, value, onValueChange, placeholder = "your-custom-link", className }: LinkInputProps) {
     return (
         <div
             className={cn(
@@ -39,3 +39,5 @@ export function LinkInput({ domain, value, onValueChange, placeholder = "your-cu
         </div>
     )
 }
+
+export {LinkInput}

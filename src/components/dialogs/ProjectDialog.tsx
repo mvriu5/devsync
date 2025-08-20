@@ -16,6 +16,7 @@ import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/c
 import {FolderGit2, Info, PackagePlus} from "lucide-react"
 import {hash} from "@/lib/hash"
 import {LinkInput} from "@/components/ui/LinkInput"
+import {BadgeInput} from "@/components/ui/BadgeInput"
 
 interface ProjectDialogProps {
     open: boolean
@@ -205,6 +206,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                 <Info size={12}/>
                                 <p className={"text-xs"}>This is the link to the progress page of the project.</p>
                             </div>
+
+                            <BadgeInput/>
 
                         </div>
                         <div className={"w-full flex gap-2 justify-end"}>
