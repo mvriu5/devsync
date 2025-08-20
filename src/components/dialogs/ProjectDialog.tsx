@@ -17,6 +17,7 @@ import {FolderGit2, Info, PackagePlus} from "lucide-react"
 import {hash} from "@/lib/hash"
 import {LinkInput} from "@/components/ui/LinkInput"
 import {BadgeInput} from "@/components/ui/BadgeInput"
+import {useState} from "react"
 
 interface ProjectDialogProps {
     open: boolean
@@ -34,6 +35,8 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
     })
     const {data: repos, isLoading: reposLoading, isError: reposError} = useGitHubRepos(accessData?.data?.accessToken ?? "")
     const {projects, addProject} = useProjectStore()
+
+    const [todos, setTodos] = useState<string[]>([])
 
     const formSchema = z.object({
         name: z.string()
@@ -207,8 +210,22 @@ const ProjectDialog = ({open, onOpenChange}: ProjectDialogProps) => {
                                 <p className={"text-xs"}>This is the link to the progress page of the project.</p>
                             </div>
 
-                            <BadgeInput/>
-
+                            <FormField
+                                control={form.control}
+                                name="todos"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Todos</FormLabel>
+                                        <BadgeInput
+                                            {...field}
+                                            values={field.value ?? []}
+                                            onValueChange={field.onChange}
+                                            placeholder={"Todos"}
+                                        />
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
                         <div className={"w-full flex gap-2 justify-end"}>
                             <Button
