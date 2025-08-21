@@ -54,7 +54,7 @@ export const project = pgTable("project", {
     password: text('password').notNull(),
     repoUrl: text('repo_url').notNull(),
     link: text('link').notNull(),
-    todos: jsonb('todos'),
+    todos: text('todos').array().notNull().default([]),
     status: text('status').notNull(),
     createdAt: timestamp('created_at').notNull(),
     updatedAt: timestamp('updated_at').notNull()

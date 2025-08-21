@@ -12,7 +12,7 @@ export type Project = {
     password: string
     repoUrl: string
     link: string
-    todos: Record<string, never>
+    todos: string[]
     status: string
     createdAt: Date
     updatedAt: Date

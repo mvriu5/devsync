@@ -14,11 +14,12 @@ import {User} from "better-auth"
 import {Project} from "@/database"
 import {Github} from "lucide-react"
 import Link from "next/link"
-import {useGitHubRepos} from "@/hooks/useGithub"
+import {status} from "@/components/Status"
 import {authClient} from "@/lib/auth-client"
 import {useGitHubCommits} from "@/hooks/useGithubCommits"
 import {ScrollArea} from "@/components/ui/ScrollArea"
 import {useRouter} from "next/navigation"
+import {StatusIcon} from "@/components/Status"
 
 interface ProjectPageProps {
     params: Promise<{
@@ -39,7 +40,6 @@ export default function ProjectPage({params}: ProjectPageProps) {
 
     const { user, project } = use(params)
 
-    //Github commits
     const {data: session, isPending: sessionLoading, error: sessionError} = authClient.useSession()
     const {data: accessData, isLoading: tokenLoading, error: tokenError} = useQuery({
         queryKey: ["github-access-token"],
@@ -132,7 +132,14 @@ export default function ProjectPage({params}: ProjectPageProps) {
                     <p>{userObject?.name}</p>
                 </div>
                 <div className={"flex items-center justify-between gap-2"}>
-                    <p className={"text-xl font-semibold text-primary"}>{projectObject?.name}</p>
+                    <div className={"flex items-center gap-2"}>
+                        <p className={"text-xl font-semibold text-primary"}>{projectObject?.name}</p>
+                        <div className={"h-6 flex items-center gap-1 px-2 bg-secondary rounded-xs shadow-sm"}>
+                            <StatusIcon statusId={projectObject?.status ?? "to-do"}/>
+                            <p className={"text-sm font-mono"}>{status.find((s) => s.id == projectObject?.status)?.name ?? "Todo"}</p>
+                        </div>
+
+                    </div>
                     <Link href={projectObject?.repoUrl ?? ""}>
                         <Button
                             className={"flex items-center gap-1 text-sm bg-primary hover:bg-secondary rounded-xs shadow-md px-2 py-0.5 font-normal"}
@@ -153,6 +160,18 @@ export default function ProjectPage({params}: ProjectPageProps) {
                 <div>Current State: In Progress</div>
                 <ProgressBar value={60} className={"h-2"}/>
                 <p>{"60% are already done!"}</p>
+            </div>
+
+            <div className={"w-full flex flex-col justify-center gap-2"}>
+                <div className={"flex item-center gap-2"}>
+                    <p className={"text-sm text-tertiary text-nowrap"}>Todos</p>
+                    <div className={"w-full h-px bg-secondary/50 mt-2.5"}/>
+                </div>
+                {projectObject?.todos.map((value) => (
+                    <div key={value}>
+                        {value}
+                    </div>
+                ))}
             </div>
 
             <div className={"w-full flex flex-col justify-center gap-4"}>

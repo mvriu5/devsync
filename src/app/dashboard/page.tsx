@@ -83,7 +83,11 @@ export default function Dashboard() {
                             <AvatarImage src={""}/>
                             <AvatarFallback/>
                         </Avatar>
-                        <p>{session?.user.name}</p>
+                        {projectsLoading ? (
+                            <Skeleton className={"w-14 h-4"}/>
+                        ) : (
+                            <p>{session?.user.name}</p>
+                        )}
                     </div>
                 </PopoverTrigger>
                 <PopoverContent
